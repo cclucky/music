@@ -1,28 +1,29 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" v-cloak>
+    <TabBar></TabBar>
+    <router-view></router-view>
+    <Floor></Floor>
+    <Player></Player>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import TabBar from "@/components/tabBar";
+import Floor from "@/components/floor";
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  TabBar,
+  Floor
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+[v-cloak]{
+  display: none;
+}
+#app{
+  padding-bottom: 60px;
 }
 </style>
