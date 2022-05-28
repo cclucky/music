@@ -7,8 +7,17 @@ import * as API from '@/api'
 
 import Smallcte from "@/components/smallCte";
 import Player from "@/components/player";
+import MusicLists from "@/components/MusicLists";
+import MyNavb from "@/components/MyNavb";
+import SideBar from "@/components/SideBar";
+import Decision from "@/components/Decision";
+
 Vue.component(Smallcte.name, Smallcte)
 Vue.component(Player.name, Player)
+Vue.component(MusicLists.name, MusicLists)
+Vue.component(MyNavb.name, MyNavb)
+Vue.component(SideBar.name, SideBar)
+Vue.component(Decision.name, Decision)
 
 import {
     Button,
@@ -21,7 +30,11 @@ import {
     Message,
     Form,
     FormItem,
+    Table,
+    TableColumn,
+    Pagination
 } from 'element-ui';
+Vue.use(Pagination);
 Vue.use(Button);
 Vue.use(Input);
 Vue.use(Icon);
@@ -30,6 +43,8 @@ Vue.use(CarouselItem);
 Vue.use(Slider);
 Vue.use(Form);
 Vue.use(FormItem);
+Vue.use(Table);
+Vue.use(TableColumn);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$confirm = MessageBox.confirm;

@@ -5,36 +5,12 @@
       <div class="wrap-left">
       <h1 class="logo">
         <img src="./images/iconnav.png">
-        <a href="/#">网易云音乐</a>
+        <router-link href="/#" to="/home">网易云音乐</router-link>
         </h1>
       <ul class="m_nav">
-        <li class="alive">
+        <li :class="{alive:currentSo===index?'alive':''}" v-for="(item1,index) in tabPyls" :key="index" @click="gotoOrder(index,$event)">
           <span
-            ><a href="/#"> <em>发现音乐</em></a>
-            <div class="low"></div></span
-          >
-        </li>
-        <li>
-          <span>
-            <a href="/#"> <em>我的音乐</em></a>
-            <div class="low"></div></span
-          >
-        </li>
-        <li>
-          <span
-            ><a href="/#"> <em>关注</em></a>
-            <div class="low"></div></span
-          >
-        </li>
-        <li>
-          <span>
-            <a href="/#"> <em>音乐人</em></a>
-            <div class="low"></div></span
-          >
-        </li>
-        <li>
-          <span
-            ><a href="/#"> <em>下载客户端</em></a>
+            ><a> <em>{{item1}}</em></a>
             <div class="low"></div></span
           >
         </li>
@@ -44,7 +20,7 @@
       <div><el-input  v-model="input" placeholder="音乐/视频/电台/用户" size="mini" icon="el-icon-search"></el-input></div>
       <a href="/#">创作者中心</a>
       <div class="m_img"> 
-        <img src="./images/user.png" style="width:40px;height:40px">
+        <img :src="userInfo.profile.avatarUrl" v-if="userInfo.profile.avatarUrl" style="width:40px;height:40px;border-radius: 20px;">
         <i class="m-tophead">99+</i>
          <div class="m_list"><ul>
         <li>我的主页</li>
@@ -58,30 +34,66 @@
   </div>
      
     </div>
-  </div>
-   <div class="nav-down">
-      <a href="/#"><em class="actives">推荐</em></a>
-      <a href="/#"><em>排行榜</em></a>
-      <a href="/#"><em>歌单</em></a>
-      <a href="/#"><em>主播电台</em></a>
-      <a href="/#"><em>歌手</em></a>
-      <a href="/#"><em>新碟上架</em></a>
+  </div>  
+   <div class="nav-down" >
+      <a href="/#" v-for="(item,index) in pyls" :key="index" @click="changeAt(index,$event)"><em :class="{actives:index===currentSort?'actives':''}">{{item}}</em></a>
       </div>
    </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "tabbar",
   data() {
     return {
-      input:''
+      input:'',
+      pyls:['推荐','排行榜','歌单','主播电台','歌手','新碟上架'],
+      tabPyls:['发现音乐','我的音乐','关注','音乐人','下载客户端'],
+      currentSort:0,
+      currentSo:0
     }
+  },
+  computed:{
+    ...mapState('m_user',['userInfo'])
+  },
+  mounted() {
+    // this.getBallList()
   },
   methods:{
     logout(){
       this.$store.dispatch('m_user/userLogout')
-    }
+    },
+  //  async getBallList(){
+  //   let res= await this.$API.ballList()
+  //   console.log(res);
+  //   }
+    changeAt(index,e){
+      this.currentSort=index
+      switch (e.target.innerText) {
+        case '歌单':
+           this.$router.push('/home/playLists')
+          break;
+      case '推荐':
+           this.$router.push('/home')
+          break;
+        default:
+          break;
+      }
+  },
+  gotoOrder(index,e){
+    this.currentSo=index
+    switch (e.target.innerText) {
+        case '发现音乐':
+           this.$router.push('/')
+          break;
+      case '我的音乐':
+           this.$router.push('/mymusic')
+          break;
+        default:
+          break;
+      }
+  }
   }
 };
 </script>

@@ -27,3 +27,18 @@ export const Login = (phone, captcha) => requests({ url: `/login/cellphone?phone
 export const logout = () => requests({ url: `logout`, method: 'get' })
 
 export const LoginMn = (phone, password) => requests({ url: `/login/cellphone?phone=${phone}&password=${password}`, method: 'get' })
+    ///playlist/catlist全部
+export const allPlayList = () => requests({ url: `/personalized`, method: 'get' })
+    //歌单全部歌曲playlist/track/all
+export const allPlayTrackList = (id, limit, offset) => requests({ url: `/playlist/track/all?id=${id}&limit=${limit}&offset=${offset}`, method: 'get' })
+
+export const allTrackList = (id) => requests({ url: `/playlist/detail?id=${id}`, method: 'get' })
+    ///homepage/dragon/ball首页-发现-圆形图标入口列表
+export const ballList = () => requests({ url: `/homepage/block/page`, method: 'get' })
+    ///artist/detail歌手详情
+export const songsArtist = (id) => requests({ url: `/artist/songs?id=${id}`, method: 'get' })
+export const songsSimiist = (id) => requests({ url: `/artist/detail?id=${id}`, method: 'get' })
+    //获取用户歌单
+export const getUserPlayList = (uid) => requests({ url: `/user/playlist?uid=${uid}`, method: 'get' })
+    ///user/subcount
+export const getUserBinding = (uid) => requests({ url: `/user/binding?uid=${uid}`, method: 'get' })

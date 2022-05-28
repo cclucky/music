@@ -1,11 +1,12 @@
-import { Login, LoginMn, logout } from '@/api';
+import { Login, LoginMn, logout, getUserPlayList } from '@/api';
 import router from '@/router';
 export default {
     namespaced: true,
 
     state: () => ({
         token: localStorage.getItem('token') || '',
-        userInfo: JSON.parse(localStorage.getItem('userInfo')) || {}
+        userInfo: JSON.parse(localStorage.getItem('userInfo')) || {},
+        playlists: []
     }),
     actions: {
         async getUserInfo({ commit }, data) {
@@ -28,7 +29,14 @@ export default {
                 commit('USERLOGOUT')
                 router.push({ path: '/login' })
             }
-        }
+        },
+        //用户歌单
+        async userPlayList({ commit }, uid) {
+            let res = await getUserPlayList(uid)
+            if (res.code == 200) {
+                commit('USERPLAYLIST', res.playlist)
+            }
+        },
     },
     mutations: {
         GETUSERINFO(state, userInfo) {
@@ -42,6 +50,9 @@ export default {
             state.userInfo = {}
             localStorage.removeItem('token')
             localStorage.removeItem('userInfo')
+        },
+        USERPLAYLIST(state, playlist) {
+            state.playlists = playlist
         }
     },
     getters: {}

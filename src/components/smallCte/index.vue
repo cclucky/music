@@ -5,12 +5,12 @@
       <div class="s_navbar">
         <slot name="s_navbar-big"></slot>
         <slot></slot>
-        <a href="">更多 <i class="el-icon-right"></i></a>
+        <router-link to="/home/playLists" href="">更多 <i class="el-icon-right"></i></router-link>
       </div>
       <!--  -->
       <ul class="s_imgo">
         <li v-for="playlist in playlists" :key="playlist.id">
-          <img :src="playlist.picUrl" /><a href="/#"
+          <img :src="playlist.picUrl"  @click="getPlayListById(playlist.id)"/><a href="/#"
             ><div class="smollIcon"><i></i><span></span><a href="/#" class="el-icon-video-play"></a></div
           ></a>
           <p style="width:140px"> {{playlist.name}}</p>
@@ -34,7 +34,10 @@ export default {
         
   },
   methods: {
- 
+      getPlayListById(id){
+      // let res = await this.$API.allTrackList(id)
+      this.$router.push({path:`/musiclist?id=${id}`})
+ }
   },
 };
 </script>
@@ -46,7 +49,8 @@ export default {
     // padding: 1vw 1vw 3vw;
     // position: absolute;
     // left: 23.6vw;
-    // width: 36vw;
+    width: 36vw;
+    margin: auto;
     .s_navbar {
       border-bottom: 2px solid red;
       height: 28px;

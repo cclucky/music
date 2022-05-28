@@ -1,5 +1,6 @@
 <template>
-  <div class="h_bar">
+  <div>
+    <div class="h_bar" v-if="$route.path==='/home'">
     <div class="h_wrap">
       <div class="swiper-left">
         <el-carousel trigger="click" height="285px">
@@ -72,7 +73,7 @@
           </div>
         <ul class="h_sing">
           <h3><span>入驻歌手</span> <a href="/#">查看全部></a></h3>
-          <li v-for="topsongs in topsongsList" :key="topsongs.id">
+          <li v-for="topsongs in topsongsList" :key="topsongs.id" @click="songsById(topsongs)">
             <img
               :src="topsongs.img1v1Url"
               style="width: 50px; height: 50px"
@@ -85,6 +86,8 @@
         </ul>
       </div>
     </div>
+  </div>
+  <router-view v-else></router-view>
   </div>
 </template>
 
@@ -157,6 +160,9 @@ export default {
     },
     login(){
       this.$router.push({path:'/login'})
+    },
+    songsById(topsongs){
+      this.$router.push('/songsHot?id='+topsongs.id)
     },
     cs(){
         console.log(this.playlists);

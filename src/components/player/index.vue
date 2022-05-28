@@ -14,7 +14,7 @@
       <div class="m_play_center">
         <div v-if="songs.name">  <a href=""> {{songs.name}}</a> 演唱者：{{songs.ar[0].name}}</div>
         <div><!-- <el-slider v-model="value1"></el-slider> -->
-        <audio controls  :src="MusicUrlList.url"> <source  type="audio/mp3"></audio></div>
+        <audio controls  :src="MusicUrlList.url" autoplay> <source  type="audio/mp3"></audio></div>
       </div>
       <!--  -->
 
@@ -32,30 +32,23 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "Player",
   data() {
     return {
       value1: 0,
-      MusicUrlList:[],
-      id:33894312,
-      songs:[]
+      songs:{}
     };
+  },computed:{
+    ...mapState('m_plays',['MusicUrlList','songsId'])
   },
   mounted(){
-      this.getMusicUrlList()
       this.getMusicUrlx()
   },
   methods:{
-    //获取音乐 url
-      async getMusicUrlList(){
-      let res= await this.$API.getMusicUrl(this.id)
-        if(res.code==200){
-            this.MusicUrlList=res.data[0]
-        }
-      },
       async getMusicUrlx(){
-      let res= await this.$API.getMusicIds(this.id)
+      let res= await this.$API.getMusicIds(this.songsId)
         if(res.code==200){
            this.songs=res.songs[0]
         }
