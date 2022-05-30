@@ -42,3 +42,7 @@ export const songsSimiist = (id) => requests({ url: `/artist/detail?id=${id}`, m
 export const getUserPlayList = (uid) => requests({ url: `/user/playlist?uid=${uid}`, method: 'get' })
     ///user/subcount
 export const getUserBinding = (uid) => requests({ url: `/user/binding?uid=${uid}`, method: 'get' })
+    //歌单评论
+export const getUserPlayDic = (id) => requests({ url: `/comment/playlist?id=${id}`, method: 'get' })
+    ///comment
+export const addComment = (t, type, id, content, commentId) => requests({ url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}`, method: 'get' })
