@@ -17,10 +17,10 @@
       </ul>
     </div>
     <div class="wrap-right"> 
-      <div><el-input  v-model="input" placeholder="音乐/视频/电台/用户" size="mini" icon="el-icon-search"></el-input></div>
+      <div><el-input @keyup.native.enter="toSearch" v-model="keywords" placeholder="音乐/视频/电台/用户" size="mini" icon="el-icon-search"></el-input></div>
       <a href="/#">创作者中心</a>
       <div class="m_img"> 
-        <img :src="userInfo.profile.avatarUrl" v-if="userInfo.profile.avatarUrl" style="width:40px;height:40px;border-radius: 20px;">
+        <img v-if="userInfo&&userInfo.profile" :src="userInfo.profile.avatarUrl"  style="width:40px;height:40px;border-radius: 20px;">
         <i class="m-tophead">99+</i>
          <div class="m_list"><ul>
         <li>我的主页</li>
@@ -48,10 +48,11 @@ export default {
   data() {
     return {
       input:'',
-      pyls:['推荐','排行榜','歌单','主播电台','歌手','新碟上架'],
+      pyls:['推荐','排行榜','歌单','歌手','主播电台','新碟上架'],
       tabPyls:['发现音乐','我的音乐','关注','音乐人','下载客户端'],
       currentSort:0,
-      currentSo:0
+      currentSo:0,
+      keywords:''
     }
   },
   computed:{
@@ -77,6 +78,12 @@ export default {
       case '推荐':
            this.$router.push('/home')
           break;
+          case '排行榜':
+           this.$router.push('/home/toplist')  
+          break;
+          // case '歌手':
+          //  this.$router.push('/home/artist')
+          // break;
         default:
           break;
       }
@@ -88,11 +95,15 @@ export default {
            this.$router.push('/')
           break;
       case '我的音乐':
-           this.$router.push('/mymusic')
+           this.$router.push(`/mymusic`)
           break;
         default:
           break;
       }
+  },
+  toSearch(){
+    this.$router.push(`/home/artist?keyword=${this.keywords}&type=1`)
+    this.keywords=''
   }
   }
 };

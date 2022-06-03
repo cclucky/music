@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-cloak>
     <div class="h_bar" v-if="$route.path==='/home'">
     <div class="h_wrap">
       <div class="swiper-left">
@@ -172,6 +172,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+[v-cloak]{display: none;}
 .h_wrap {
   display: flex;
   justify-content: center;

@@ -1,7 +1,7 @@
 <template>
   <div class="s_tab_main">
       <!--  -->
-       <div class="s_tab_main1"> <h1>歌曲列表</h1> <span>200首</span> <span v-if="MusicSongs.length">{{MusicSongs.length}}首歌</span></div>
+       <div class="s_tab_main1"> <h1>歌曲列表</h1> <span v-if="MusicSongs.length">{{MusicSongs.length}}首歌</span></div>
        <!--  -->
        <el-table
     ref="singleTable"
@@ -17,8 +17,8 @@
     <el-table-column
       label="歌曲标题">
        <template v-slot:default="{row}">
-         <i class="el-icon-video-play" @click="playSongs(row)"></i>
-         <span> {{row.name}}</span>
+         <i class="el-icon-video-play" style="font-size:18px" @click="playSongs(row)"></i>
+         <a  @click="getSongsById(row)"> {{row.name}}</a>
     </template>
     </el-table-column>
     <el-table-column
@@ -55,14 +55,7 @@ export default {
       }
     },
     computed:{
-      // timeLong(){
-      //   let t = this.MusicSongs.dt/1000
-      //   let m = t/60
-      //   m=m>10?'0'+m:m
-      //   let s = t%60
-      //   s=s>10?'0'+s:s
-      //   return `${m}/${s}`
-      // }
+   
     },
    mounted() {
        this.getAllTrackList()
@@ -78,17 +71,13 @@ export default {
     async getAllTrackList() {
         const{trackID} = this
       let res = await this.$API.allPlayTrackList(trackID);
-      this.MusicSongs=res.songs
+      if(res.code==200){
+        this.MusicSongs=res.songs
+      }
   },
-    //  async songsArtists(){
-    //   let res= await this.$API.getMusicIds(this.currentRow.id)
-    //   console.log(res);
-    //   if(res.code==200){
-    //     console.log(this.MusicSongs);
-    //     // .songsName=res.songs[0].ar[0].name
-    //     // console.log(this.MusicSongs.songsName);
-    //   }
-    //  }
+  getSongsById(row){
+          this.$router.push(`/song?id=${row.id}`)
+  }
     },
       watch:{
            '$route.query.id':{
@@ -104,7 +93,7 @@ export default {
 
 <style scoped lang="scss">
 .s_tab_main{
-    width: 58vw;
+    // width: 58vw;
     margin: auto;
     .s_tab_main1{
       h1{

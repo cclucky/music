@@ -42,7 +42,23 @@ export const songsSimiist = (id) => requests({ url: `/artist/detail?id=${id}`, m
 export const getUserPlayList = (uid) => requests({ url: `/user/playlist?uid=${uid}`, method: 'get' })
     ///user/subcount
 export const getUserBinding = (uid) => requests({ url: `/user/binding?uid=${uid}`, method: 'get' })
-    //歌单评论
-export const getUserPlayDic = (id) => requests({ url: `/comment/playlist?id=${id}`, method: 'get' })
+    //歌单评论 &pageNo=${pageNo}&pageSize=${pageSize}&sortType=${sortType}&cursor=${cursor}   pageNo, pageSize, sortType, cursor
+export const getUserPlayDic = (type, id, pageNo, pageSize, sortType, cursor) => requests({ url: `/comment/new?type=${type}&id=${id}&pageNo=${pageNo}&pageSize=${pageSize}&sortType=${sortType}&cursor=${cursor}`, method: 'get' })
     ///comment
 export const addComment = (t, type, id, content, commentId) => requests({ url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}`, method: 'get' })
+    //删除歌单
+export const getDeletePlayList = (id) => requests({ url: `/playlist/delete?id=${id}`, method: 'get' })
+    //新建歌单
+export const getNewPlayList = (name) => requests({ url: `/playlist/create?name=${name}`, method: 'get' })
+
+export const getLyricList = (id) => requests({ url: `/lyric?id=${id}`, method: 'get' })
+    ///comment/music
+export const getMusicLyricList = (id, limit) => requests({ url: `/comment/music?id=${id}&limit=${limit}`, method: 'get' })
+
+export const getTopList = (id) => requests({ url: `/top/list?id=${id}`, method: 'get' })
+
+export const getTopListDetail = () => requests({ url: `/toplist`, method: 'get' })
+    // /toplist/artist歌手榜单
+export const getTopListArtist = () => requests({ url: `/toplist/artist`, method: 'get' })
+    //  /search?keywords=
+export const getSearchList = (keywords, limit, type, offset) => requests({ url: `/search?keywords=${keywords}&limit=${limit}&type=${type}&offset=${offset}`, method: 'get' })

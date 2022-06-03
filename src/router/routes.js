@@ -10,6 +10,18 @@ export default [{
         component: () =>
             import ('@/views/Home/PlayLists'),
         meta: {},
+    }, {
+        name: 'toplist',
+        path: 'toplist',
+        component: () =>
+            import ('@/views/Home/Toplist'),
+        meta: {},
+    }, {
+        name: 'artist',
+        path: 'artist',
+        component: () =>
+            import ('@/views/Home/artist'),
+        meta: {},
     }]
 }, {
     path: '/mymusic',
@@ -26,6 +38,12 @@ export default [{
             import ('@/views/MyMusic/MyPlaysList'),
         meta: {},
     }, ]
+}, {
+    name: 'song',
+    path: '/song',
+    component: () =>
+        import ('@/views/Song'),
+    meta: {}
 }, {
     name: 'login',
     path: '/login',

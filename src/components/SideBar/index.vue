@@ -4,8 +4,12 @@
     <div class="my_sid_nav_left">
       <div class="nav_left">
         <h1>创建的歌单>{{ `(${playlists.length})` }}</h1>
-        <el-button size="mini">+新建</el-button>
+        <el-button @click.native="changeIs">新建</el-button>
       </div>
+      <div v-if="isShowNew"> 
+        <el-input v-model="playName" placeholder="" size="mini" ></el-input> 
+        <el-button size="mini" @click.native="addNewPlayList">+新建</el-button>
+        <el-button size="mini" @click.native="isShowNew=false">取消</el-button></div>
       <div
         class="nav_down"
         @click="toPlaysList(list)"
@@ -14,7 +18,9 @@
       >
         <img :src="list.coverImgUrl" alt="" />
         <div>
-          <a>{{ list.name }}</a> 
+          <a>{{ list.name }}</a>
+          <!-- @click.stop="deletePlayList(list.id)" -->
+          <span @click="open(list.id)">删除</span>
           <!-- <a>{{ playlists.length }}首歌</a> -->
         </div>
       </div>
@@ -26,6 +32,12 @@
 import { mapState } from "vuex";
 export default {
   name: "SideBar",
+  data() {
+    return {
+      playName: "",
+      isShowNew:false
+    };
+  },
   computed: {
     ...mapState("m_user", ["playlists"]),
   },
@@ -38,6 +50,39 @@ export default {
       // let res1= await this.$API.allTrackList(list.id)
       // console.log(res1);
     },
+    changeIs(){
+this.isShowNew=true;
+    },
+    async addNewPlayList() {
+      let res = await this.$API.getNewPlayList(this.playName);
+      if (res.code == 200) {
+        this.isShowNew=false;
+        this.playlists.push(res.playlist);
+      }
+    },
+    async deletePlayList(id) {
+      let res = await this.$API.getDeletePlayList(id);
+      if(res.code==200){
+      }
+    },
+    open(id){
+      this.$confirm('此操作将永久删除该歌单, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.deletePlayList(id)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    }
   },
 };
 </script>
